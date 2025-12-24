@@ -100,7 +100,7 @@ where:
 3. **Black–Litterman Construction**
    - Compute implied equilibrium returns
    - Encode regression outputs as investor views
-   - Calibrate uncertainty through the \( \Omega \) matrix
+   - Calibrate uncertainty through the Ω matrix
 
 4. **Portfolio Optimization**
    - Solve mean–variance optimization problems
