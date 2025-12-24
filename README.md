@@ -9,11 +9,11 @@ This repository explores **quantitative portfolio construction** by combining:
 - **Bayesian portfolio allocation using the Black–Litterman model**
 - **Mean–variance optimization within the Markowitz framework**
 
-The project illustrates how **macroeconomic-driven return forecasts** can be integrated into **modern portfolio theory** to obtain more stable and economically interpretable portfolio allocations.
+The project aims to illustrate how **macroeconomic-driven return forecasts** can be integrated into **modern portfolio theory** to obtain more stable and economically interpretable portfolio allocations.
 
 ---
 
-## 🎯 Objectives
+## Objectives
 
 - Predict asset returns using **macroeconomic factors**
 - Incorporate regression-based views into portfolio allocation via **Black–Litterman**
@@ -28,14 +28,16 @@ The project illustrates how **macroeconomic-driven return forecasts** can be int
 
 The classical portfolio optimization problem is defined as:
 
-minimize: wᵀ Σ w  
+minimize: wᵀΣw  
 subject to:  
-- wᵀ μ = μₚ  
-- ∑ᵢ wᵢ = 1  
+- wᵀμ = μₚ  
+- ∑ᵢ wᵢ = 1
+- wᵢ ≥ 0
 
 where:
 - μ is the vector of expected returns  
 - Σ is the covariance matrix of asset returns
+- w is the weight vector
 
 While foundational, this framework is known to be:
 - Highly sensitive to estimation errors
@@ -74,15 +76,6 @@ Expected asset returns are estimated using **macroeconomic variables** such as:
 - Yield curve indicators
 - Other relevant macro factors
 
-The regression model is:
-
-Rᵢ,ₜ = αᵢ + βᵢᵀ Xₜ + εᵢ,ₜ
-
-where:
-- Xₜ represents macroeconomic variables
-- βᵢ captures asset sensitivities to macro factors
-- Regression forecasts are used as **views** in the Black–Litterman framework
-
 ---
 
 ## Methodology
@@ -113,6 +106,7 @@ where:
 - pandas
 - scikit-learn
 - SciPy
+- yfinance 
 - PyPortfolioOpt
 - matplotlib / seaborn
 - Jupyter Notebook
@@ -127,7 +121,7 @@ cd yourrepo
 pip install -r requirements.txt
 jupyter notebook
 ```
-## 📚 References
+## References
 
 - Black, F; Litterman, R. Combining investor views with market equilibrium. The Journal of Fixed Income, 1991.
 - Idzorek T. A step-by-step guide to the Black-Litterman model: Incorporating user-specified confidence levels. In: Forecasting Expected Returns in the Financial Markets. Elsevier Ltd; 2007. p. 17–38.
@@ -135,3 +129,7 @@ jupyter notebook
 ## ⚠️ Disclaimer
 
 This project is for educational purposes only and does not constitute financial advice.
+
+## License
+
+This project is licensed under the Apache License - see the LICENSE file for details.
