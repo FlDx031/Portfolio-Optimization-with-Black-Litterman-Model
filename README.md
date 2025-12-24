@@ -28,13 +28,14 @@ The project illustrates how **macroeconomic-driven return forecasts** can be int
 
 The classical portfolio optimization problem is defined as:
 
-<p align="center">
-<img src="https://latex.codecogs.com/svg.image?\min_{w}\;w^\top\Sigma w\quad\text{s.t.}\quad w^\top\mu=\mu_p,\;\sum_{i=1}^N w_i=1" />
-</p>
+minimize: wᵀ Σ w  
+subject to:  
+- wᵀ μ = μₚ  
+- ∑ᵢ wᵢ = 1  
 
 where:
-- \( \mu \) is the vector of expected returns  
-- \( \Sigma \) is the covariance matrix of asset returns
+- μ is the vector of expected returns  
+- Σ is the covariance matrix of asset returns
 
 While foundational, this framework is known to be:
 - Highly sensitive to estimation errors
@@ -51,16 +52,14 @@ The Black–Litterman model addresses these limitations by combining:
 
 The posterior expected returns are given by:
 
-<p align="center">
-<img src="https://latex.codecogs.com/svg.image?\mu_{BL}=\left[(\tau\Sigma)^{-1}+P^\top\Omega^{-1}P\right]^{-1}\left[(\tau\Sigma)^{-1}\pi+P^\top\Omega^{-1}q\right]" />
-</p>
+μ_BL = [ (τΣ)⁻¹ + Pᵀ Ω⁻¹ P ]⁻¹ [ (τΣ)⁻¹ π + Pᵀ Ω⁻¹ q ]
 
 where:
-- \( \pi \) are implied equilibrium returns
-- \( P \) encodes the structure of investor views
-- \( q \) represents expected excess returns
-- \( \Omega \) captures confidence in those views
-- \( \tau \) scales prior uncertainty
+- π: implied equilibrium returns  
+- P: view matrix  
+- q: view returns  
+- Ω: view uncertainty  
+- τ: scaling parameter
 
 This Bayesian formulation yields smoother and more intuitive portfolio allocations.
 
@@ -77,12 +76,11 @@ Expected asset returns are estimated using **macroeconomic variables** such as:
 
 The regression model is:
 
-<p align="center">
-<img src="https://latex.codecogs.com/svg.image?R_{i,t}=\alpha_i+\beta_i^\top X_t+\varepsilon_{i,t}" />
-</p>
+Rᵢ,ₜ = αᵢ + βᵢᵀ Xₜ + εᵢ,ₜ
 
 where:
-- \( X_t \) is the vector of macroeconomic factors
+- Xₜ represents macroeconomic variables
+- βᵢ captures asset sensitivities to macro factors
 - Regression forecasts are used as **views** in the Black–Litterman framework
 
 ---
