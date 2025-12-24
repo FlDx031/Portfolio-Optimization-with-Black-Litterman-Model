@@ -28,14 +28,12 @@ The project illustrates how **macroeconomic-driven return forecasts** can be int
 
 The classical portfolio optimization problem is defined as:
 
-\[
-\min_w \; w^\top \Sigma w
-\quad \text{s.t.} \quad
-w^\top \mu = \mu_p, \quad \sum_{i=1}^N w_i = 1
-\]
+<p align="center">
+<img src="https://latex.codecogs.com/svg.image?\min_{w}\;w^\top\Sigma w\quad\text{s.t.}\quad w^\top\mu=\mu_p,\;\sum_{i=1}^N w_i=1" />
+</p>
 
 where:
-- \( \mu \) is the vector of expected returns
+- \( \mu \) is the vector of expected returns  
 - \( \Sigma \) is the covariance matrix of asset returns
 
 While foundational, this framework is known to be:
@@ -53,11 +51,9 @@ The Black–Litterman model addresses these limitations by combining:
 
 The posterior expected returns are given by:
 
-\[
-\mu_{BL} =
-\left[(\tau \Sigma)^{-1} + P^\top \Omega^{-1} P\right]^{-1}
-\left[(\tau \Sigma)^{-1} \pi + P^\top \Omega^{-1} q\right]
-\]
+<p align="center">
+<img src="https://latex.codecogs.com/svg.image?\mu_{BL}=\left[(\tau\Sigma)^{-1}+P^\top\Omega^{-1}P\right]^{-1}\left[(\tau\Sigma)^{-1}\pi+P^\top\Omega^{-1}q\right]" />
+</p>
 
 where:
 - \( \pi \) are implied equilibrium returns
@@ -81,9 +77,9 @@ Expected asset returns are estimated using **macroeconomic variables** such as:
 
 The regression model is:
 
-\[
-R_{i,t} = \alpha_i + \beta_i^\top X_t + \varepsilon_{i,t}
-\]
+<p align="center">
+<img src="https://latex.codecogs.com/svg.image?R_{i,t}=\alpha_i+\beta_i^\top X_t+\varepsilon_{i,t}" />
+</p>
 
 where:
 - \( X_t \) is the vector of macroeconomic factors
