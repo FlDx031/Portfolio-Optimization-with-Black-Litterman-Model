@@ -1,5 +1,5 @@
 # Quantitative Portfolio Optimization 
-## Black–Litterman Model & Return Prediction via Multiple Linear Regression
+## Macro-Factor Return Forecasting and Portfolio Optimization using the Black-Litterman Model
 
 ## Overview
 
