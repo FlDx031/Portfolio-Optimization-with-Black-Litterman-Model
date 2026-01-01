@@ -15,7 +15,7 @@ The project aims to illustrate how **macroeconomic-driven return forecasts** can
 
 ## Objectives
 
-- Predict asset returns using **macroeconomic factors**
+- Expected asset returns using **macroeconomic factors**
 - Incorporate regression-based views into portfolio allocation via **Black–Litterman**
 - Compare classical mean–variance optimization with Bayesian allocation
 - Highlight the role of **confidence in investor views**
@@ -26,8 +26,8 @@ The project aims to illustrate how **macroeconomic-driven return forecasts** can
 
 1. **Data Collection**
    - Asset prices and returns
-   - Market capitalization weights
-   - Macroeconomic indicators (inflation, GDP, interest rates, etc.)
+   - Market capitalization
+   - Macroeconomic indicators (inflation, PMI composite, yield curve, etc.)
 
 2. **Return Prediction**
    - Estimate multiple linear regression models
@@ -43,16 +43,17 @@ The project aims to illustrate how **macroeconomic-driven return forecasts** can
    - Solve mean–variance optimization problems
 ---
 
-## Technologies Used
+## Technologies & Libraries Used
 
 - **Python**
 - NumPy
 - pandas
 - scikit-learn
 - SciPy
-- yfinance 
+- yfinance
 - PyPortfolioOpt
-- matplotlib / seaborn
+- matplotlib
+- seaborn
 - Jupyter Notebook
 
 ---
