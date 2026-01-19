@@ -1,11 +1,14 @@
-# Quantitative Portfolio Optimization 
+# Quantitative Portfolio Optimization
+[![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)](https://www.python.org/)
+[![License](https://img.shields.io/badge/license-Apache%202.0-green)](LICENSE)
+
 ## Macro-Factor Return Forecasting and Portfolio Optimization using the Black-Litterman Model
 
 ## Overview
 
 This repository explores **quantitative portfolio construction** by combining:
 
-- **Return prediction using Multiple Linear Regression**
+- **Return forcasting using Multiple Linear Regression**
 - **Bayesian portfolio allocation using the Black–Litterman model**
 - **Mean–variance optimization within the Markowitz framework**
 
@@ -15,7 +18,7 @@ The project aims to illustrate how **macroeconomic-driven return forecasts** can
 
 ## Objectives
 
-- Expected asset returns using **macroeconomic factors**
+- Forecast expected asset returns using macroeconomic factors
 - Incorporate regression-based views into portfolio allocation via **Black–Litterman**
 - Compare classical mean–variance optimization with Bayesian allocation
 - Highlight the role of **confidence in investor views**
