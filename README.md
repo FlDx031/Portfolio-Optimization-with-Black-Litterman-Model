@@ -9,11 +9,11 @@
 
 This repository explores **quantitative portfolio construction** by combining:
 
-- **Return prediction using Multiple Linear Regression**
-- **Bayesian portfolio allocation using the Black–Litterman model**
-- **Mean–variance optimization within the Markowitz framework**
+- **Return prediction** using Multiple Linear Regression on macroeconomic factors
+- **Bayesian portfolio allocation** via the Black–Litterman model
+- **Mean–variance optimization** within the Markowitz framework
 
-The project aims to illustrate how **macroeconomic-driven return forecasts** can be integrated into **modern portfolio theory** to obtain more stable and economically interpretable portfolio allocations.
+The project illustrates how **macroeconomic-driven return forecasts** can be integrated into modern portfolio theory to obtain more stable and economically interpretable allocations.
 
 ---
 
