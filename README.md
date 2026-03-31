@@ -94,7 +94,7 @@ Four macroeconomic factors are used:
 | Δ VIX | `VIXCLS` | First difference |
 | Industrial Production | `INDPRO` | Monthly return |
 
-The model is estimated via **Ridge Regression** (L2 regularisation) to handle multicollinearity. The view uncertainty matrix **Ω** is calibrated using the out-of-sample **MSE** of each regression — a model with higher prediction error contributes a less confident view.
+The model is estimated via **Ridge Regression** (L2 regularisation) to handle multicollinearity. The view uncertainty matrix **Ω** is calibrated using the out-of-sample **MSE** of each regression: a model with higher prediction error contributes a less confident view.
 
 #### Method B — Momentum (benchmark)
 
@@ -106,7 +106,7 @@ zᵢ   = (Momᵢ - mean(Mom)) / std(Mom) # cross-sectional normalisation
 Qᵢ   = πᵢ + zᵢ × k                  # view = prior adjusted by momentum signal
 ```
 
-The last month is excluded to avoid short-term reversal. This approach requires only price data and zero modelling effort — making it a strong and honest benchmark.
+The last month is excluded to avoid short-term reversal. This approach requires only price data and zero modelling effort, making it a strong and honest benchmark.
 
 ---
 
