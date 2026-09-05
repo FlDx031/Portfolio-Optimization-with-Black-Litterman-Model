@@ -10,7 +10,7 @@ Functions:
 
 The module keeps interfaces simple and documented for pedagogy.
 """
-from typing import List, Dict, Tuple
+from typing import List, Dict, Tuple, Optional
 import numpy as np
 import pandas as pd
 from pypfopt import BlackLittermanModel, EfficientFrontier, expected_returns, risk_models, black_litterman
@@ -37,44 +37,51 @@ def compute_sigma(prices: pd.DataFrame, method: str = 'ledoit_wolf_constant_corr
     return sigma
 
 
-def market_prior_from_caps(market_caps: Dict[str, float], sigma: pd.DataFrame, risk_free_rate: float = 0.02, frequency: int = 12) -> pd.Series:
+def market_prior_from_caps(market_caps: Dict[str, float], sigma: pd.DataFrame, market_prices: Optional[pd.Series] = None, risk_free_rate: float = 0.02, frequency: int = 12) -> pd.Series:
     """Compute market-implied prior returns using PyPortfolioOpt black_litterman.market_implied_prior_returns.
 
     market_caps: dict ticker->market cap. sigma: covariance matrix with matching order to tickers.
+    market_prices: optional Series of market index prices (used to compute implied risk aversion delta).
+    If market_prices is not provided, a sensible default delta is used.
+
     Returns a pd.Series of implied returns aligned with sigma.index.
     """
-    # Ensure order
     tickers = list(sigma.index)
-    # Reorder caps to tickers and compute market weights
     caps = np.array([market_caps.get(t, 0.0) for t in tickers], dtype=float)
     total = caps.sum()
     if total == 0:
         raise ValueError('No market caps available to compute market prior')
-    w_mkt = caps / total
-    # PyPortfolioOpt expects dict mapping
+    # Delta: try to compute from market_prices if provided, else use a default
+    if market_prices is not None:
+        try:
+            delta = black_litterman.market_implied_risk_aversion(market_prices, frequency=frequency, risk_free_rate=risk_free_rate)
+        except Exception:
+            delta = 2.5
+    else:
+        delta = 2.5
+
     cap_dict = {t: float(market_caps.get(t, 0.0)) for t in tickers}
-    delta = black_litterman.market_implied_risk_aversion(pd.Series(w_mkt, index=tickers), frequency=frequency, risk_free_rate=risk_free_rate)
     prior = black_litterman.market_implied_prior_returns(cap_dict, delta, sigma, risk_free_rate=risk_free_rate)
-    # Ensure series in correct order
     prior_s = pd.Series(prior, index=tickers)
     return prior_s
 
 
-def black_litterman_opt(tickers: List[str], prices: pd.DataFrame, P: np.ndarray, Q: np.ndarray, Omega: np.ndarray, market_caps: Dict[str, float], risk_free_rate: float = 0.02) -> Dict[str, float]:
+def black_litterman_opt(tickers: List[str], prices: pd.DataFrame, P: np.ndarray, Q: np.ndarray, Omega: np.ndarray, market_caps: Dict[str, float], market_prices: Optional[pd.Series] = None, risk_free_rate: float = 0.02) -> Dict[str, float]:
     """Return cleaned long-only weights from Black-Litterman model.
 
     tickers: list of tickers (order must match prices columns)
     prices: DataFrame of prices
     P, Q, Omega: BL inputs (Q expected as 1D or 2D array compatible with pypfopt)
     market_caps: dict ticker->market cap
+    market_prices: optional Series (market index prices) used to compute implied risk aversion
     Returns: dict ticker->weight
     """
     sigma = compute_sigma(prices, method='ledoit_wolf_constant_correlation', frequency=12)
     # market implied prior
     try:
-        market_prior = market_prior_from_caps(market_caps, sigma, risk_free_rate=risk_free_rate, frequency=12)
+        market_prior = market_prior_from_caps(market_caps, sigma, market_prices=market_prices, risk_free_rate=risk_free_rate, frequency=12)
     except Exception:
-        # fallback: use equally-weighted prior using mean historical returns
+        # fallback: use mean historical returns
         mu = expected_returns.mean_historical_return(prices, frequency=12)
         market_prior = mu
 
@@ -86,10 +93,8 @@ def black_litterman_opt(tickers: List[str], prices: pd.DataFrame, P: np.ndarray,
     try:
         ef.max_sharpe(risk_free_rate=risk_free_rate / 12)
     except Exception:
-        # fallback to max Sharpe without rf
         ef.max_sharpe()
     weights = ef.clean_weights()
-    # Ensure only tickers in list
     out = {t: float(weights.get(t, 0.0)) for t in tickers}
     return out
 
