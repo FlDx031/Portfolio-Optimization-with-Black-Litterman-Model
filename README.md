@@ -1,6 +1,6 @@
 # Portfolio allocation with Black–Litterman
 
-This master's-level educational project uses macroeconomic return forecasts as views in a Black–Litterman portfolio. The notebook presents the data, methodology, and results; four small Python modules contain the calculations. The backtest uses a manual monthly loop without vectorbt.
+This master's-level educational project uses macroeconomic return forecasts as views in a Black–Litterman portfolio. The notebook presents the data, methodology, and results; four small Python modules contain the calculations. The backtest uses a manual monthly loop.
 
 **Research question: do macroeconomic factors add value beyond a simple momentum signal?** Outperformance is not assumed. A finding of no improvement is also a valid result.
 
