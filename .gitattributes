@@ -1,4 +1,4 @@
-*.ipynb filter=nbstripout
-
-*.zpln filter=nbstripout
-*.ipynb diff=ipynb
+* text=auto
+*.py text eol=lf
+*.md text eol=lf
+*.ipynb text eol=lf
