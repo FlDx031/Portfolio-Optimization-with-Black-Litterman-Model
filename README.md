@@ -125,7 +125,7 @@ $$r_f=(1+r_f^{annual})^{1/12}-1.$$
 
 The covariance is estimated from 36 month-end returns and stabilized with a fixed adjustment:
 
-$$\Sigma=0.8\,\widehat\Sigma+0.2\,\operatorname{diag}(\widehat\Sigma).$$
+$$\Sigma=0.8\,\widehat\Sigma+0.2\,\mathrm{diag}(\widehat\Sigma).$$
 
 This is fixed shrinkage toward the diagonal, **not** the Ledoit–Wolf estimator. A very small diagonal term provides numerical stability.
 
@@ -143,7 +143,7 @@ At the end of month $t$, the latest month is excluded:
 
 $$m_{i,t}=\frac{p_{i,t-1}}{p_{i,t-12}}-1,\qquad z_i=\frac{m_i-\bar m}{\sigma_m}.$$
 
-$$Q_i=\pi_i+kz_i,\qquad k=0.005,\qquad \Omega=\operatorname{diag}(\tau\Sigma).$$
+$$Q_i=\pi_i+kz_i,\qquad k=0.005,\qquad \Omega=\mathrm{diag}(\tau\Sigma).$$
 
 $k$ is a fixed monthly view strength, not an annual return. If all signals are identical, their standardized scores are zero. The rule measures eleven months of performance and skips the most recent month.
 
@@ -157,7 +157,7 @@ Factors are centered and scaled using training observations only. The intercept 
 
 The latest 12 known observations provide chronological validation. Each prediction is refitted using only earlier observations, starting with at least 24 training observations. Thus:
 
-$$\Omega_{ii}=\operatorname{MSE}_{i,validation},\qquad Q_i=\widehat R_i-r_f.$$
+$$\Omega_{ii}=\mathrm{MSE}_{i,\mathrm{validation}},\qquad Q_i=\widehat R_i-r_f.$$
 
 After validation, Ridge is refitted on all currently known pairs to produce the next view. This absolute prediction does not include the prior, and training error is not substituted for validation MSE.
 
