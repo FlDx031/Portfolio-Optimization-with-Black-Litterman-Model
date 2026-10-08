@@ -121,11 +121,15 @@ Publication delays differ by series. Inflation is not called a “surprise” be
 
 Returns, covariances, views, and uncertainties are monthly. Only the final performance measures are annualized. The constant assumed risk-free rate is converted as follows:
 
-$$r_f=(1+r_f^{annual})^{1/12}-1.$$
+```math
+r_f=(1+r_f^{annual})^{1/12}-1.
+```
 
 The covariance is estimated from 36 month-end returns and stabilized with a fixed adjustment:
 
-$$\Sigma=0.8\,\widehat\Sigma+0.2\,\mathrm{diag}(\widehat\Sigma).$$
+```math
+\Sigma=0.8\,\widehat\Sigma+0.2\,\mathrm{diag}(\widehat\Sigma).
+```
 
 This is fixed shrinkage toward the diagonal, **not** the Ledoit–Wolf estimator. A very small diagonal term provides numerical stability.
 
@@ -133,7 +137,9 @@ This is fixed shrinkage toward the diagonal, **not** the Ledoit–Wolf estimator
 
 For an equal-weight reference portfolio $w_0$ and risk aversion $\delta=3$:
 
-$$\pi=\delta\Sigma w_0,\qquad w_{0,i}=1/N.$$
+```math
+\pi=\delta\Sigma w_0,\qquad w_{0,i}=1/N.
+```
 
 $\pi$ represents monthly excess returns above the risk-free rate. This prior describes a reference allocation; it does not claim to reproduce market equilibrium or estimate market risk aversion from SPY.
 
@@ -141,9 +147,13 @@ $\pi$ represents monthly excess returns above the risk-free rate. This prior des
 
 At the end of month $t$, the latest month is excluded:
 
-$$m_{i,t}=\frac{p_{i,t-1}}{p_{i,t-12}}-1,\qquad z_i=\frac{m_i-\bar m}{\sigma_m}.$$
+```math
+m_{i,t}=\frac{p_{i,t-1}}{p_{i,t-12}}-1,\qquad z_i=\frac{m_i-\bar m}{\sigma_m}.
+```
 
-$$Q_i=\pi_i+kz_i,\qquad k=0.005,\qquad \Omega=\mathrm{diag}(\tau\Sigma).$$
+```math
+Q_i=\pi_i+kz_i,\qquad k=0.005,\qquad \Omega=\mathrm{diag}(\tau\Sigma).
+```
 
 $k$ is a fixed monthly view strength, not an annual return. If all signals are identical, their standardized scores are zero. The rule measures eleven months of performance and skips the most recent month.
 
@@ -151,13 +161,17 @@ $k$ is a fixed monthly view strength, not an annual return. If all signals are i
 
 Factors known at the signal predict the next holding period's return. The regression minimizes:
 
-$$\sum_t(R_{i,t}-a_i-X_t^Tb_i)^2+\alpha\lVert b_i\rVert_2^2,\qquad\alpha=1.$$
+```math
+\sum_t(R_{i,t}-a_i-X_t^Tb_i)^2+\alpha\lVert b_i\rVert_2^2,\qquad\alpha=1.
+```
 
 Factors are centered and scaled using training observations only. The intercept is not penalized. At most 60 fully observed factor–return pairs are retained.
 
 The latest 12 known observations provide chronological validation. Each prediction is refitted using only earlier observations, starting with at least 24 training observations. Thus:
 
-$$\Omega_{ii}=\mathrm{MSE}_{i,\mathrm{validation}},\qquad Q_i=\widehat R_i-r_f.$$
+```math
+\Omega_{ii}=\mathrm{MSE}_{i,\mathrm{validation}},\qquad Q_i=\widehat R_i-r_f.
+```
 
 After validation, Ridge is refitted on all currently known pairs to produce the next view. This absolute prediction does not include the prior, and training error is not substituted for validation MSE.
 
@@ -165,9 +179,13 @@ After validation, Ridge is refitted on all currently known pairs to produce the 
 
 With absolute views $P=I$, $A=\tau\Sigma$, and $\tau=0.05$:
 
-$$\mu_{BL}=\pi+A(A+\Omega)^{-1}(Q-\pi),$$
+```math
+\mu_{BL}=\pi+A(A+\Omega)^{-1}(Q-\pi),
+```
 
-$$\Sigma_{BL}=\Sigma+A-A(A+\Omega)^{-1}A.$$
+```math
+\Sigma_{BL}=\Sigma+A-A(A+\Omega)^{-1}A.
+```
 
 As uncertainty $\Omega$ increases, a view moves the prior less. The code solves linear systems instead of explicitly inverting matrices.
 
@@ -175,7 +193,9 @@ As uncertainty $\Omega$ increases, a view moves the prior less. The code solves 
 
 The optimizer maximizes a simple mean–variance utility:
 
-$$\max_w\;w^T\mu-\frac{\delta}{2}w^T\Sigma w,\qquad\sum_iw_i=1,\quad0\leq w_i\leq1.$$
+```math
+\max_w\;w^T\mu-\frac{\delta}{2}w^T\Sigma w,\qquad\sum_iw_i=1,\quad0\leq w_i\leq1.
+```
 
 BL uses posterior moments; Markowitz uses the historical mean excess return and estimated covariance. This objective avoids difficulties with maximizing a Sharpe ratio when all expected returns are negative. Sharpe remains a performance measure, not the optimization objective.
 
@@ -183,15 +203,23 @@ BL uses posterior moments; Markowitz uses the historical mean excess return and 
 
 Let $w_t^-$ be the pre-trade weights after drift, and let $c=0.001$ (10 basis points per amount bought or sold):
 
-$$T_t=\sum_i|w_{i,t}-w_{i,t}^-|,\qquad R_{p,t}^{net}=(1-cT_t)(1+w_t^TR_t)-1.$$
+```math
+T_t=\sum_i|w_{i,t}-w_{i,t}^-|,\qquad R_{p,t}^{net}=(1-cT_t)(1+w_t^TR_t)-1.
+```
 
 The initial purchase from cash has $T=1$. Completely replacing one asset with another has $T=2$. SPY pays the same entry cost. Positions are valued at the end of the test without terminal liquidation. This weight-based approximation does not solve for the tiny share adjustment needed to fund transaction costs exactly.
 
-$$V_0=1,\quad V_t=V_{t-1}(1+R_{p,t}^{net}),\quad CAGR=V_T^{12/T}-1,$$
+```math
+V_0=1,\quad V_t=V_{t-1}(1+R_{p,t}^{net}),\quad CAGR=V_T^{12/T}-1,
+```
 
-$$\sigma_{ann}=\sigma(R^{net})\sqrt{12},\quad Sharpe=\frac{12\,\overline{(R^{net}-r_f)}}{\sigma_{ann}},$$
+```math
+\sigma_{ann}=\sigma(R^{net})\sqrt{12},\quad Sharpe=\frac{12\,\overline{(R^{net}-r_f)}}{\sigma_{ann}},
+```
 
-$$DD_t=\frac{V_t}{\max_{0\leq s\leq t}V_s}-1.$$
+```math
+DD_t=\frac{V_t}{\max_{0\leq s\leq t}V_s}-1.
+```
 
 Initial wealth is included in drawdown, including when the first month loses money. Annual turnover is the monthly mean of $T_t$ multiplied by 12; it includes the initial entry.
 
